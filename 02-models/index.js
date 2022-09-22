@@ -1,6 +1,7 @@
 'use strict';
 
 const { Sequelize, DataTypes } = require('sequelize');
+const { createPostModel } = require('./post.model');
 
 require('dotenv').config();
 
@@ -12,7 +13,7 @@ const sequelizeOption = {}
 
 const sequelize = new Sequelize(POSTGRS_URL, sequelizeOption);
 
+const postModel = createPostModel(sequelize, DataTypes);
 
 
-
-module.exports = { sequelize };
+module.exports = { sequelize, postModel };
