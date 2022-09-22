@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const { postModel } = require('../02-models/index')
+const { postModel, commentModel } = require('../02-models/index');
 const router = express.Router();
 
 
@@ -14,7 +14,7 @@ router.delete('/post/:id', deletePost);
 
 async function addPost(req, res, next) {
   try {
-    const obj = req.body;
+    const obj = req.body;  //{"title":"any" , "content":"any"}
     let newPost = await postModel.create(obj);
     //create sequelize method returns the created object only.
     let allPosts = await postModel.findAll();
@@ -27,7 +27,7 @@ async function addPost(req, res, next) {
 
 async function getAllPosts(req, res, next) {
   try {
-    let allPosts = await postModel.findAll();
+    let allPosts = await postModel.findAll({ include: [commentModel] });
     //findAll sequelize method returns all table data.
     res.status(200).send(allPosts);
   } catch (e) {
@@ -38,10 +38,16 @@ async function getAllPosts(req, res, next) {
 async function getOnePost(req, res, next) {
   try {
     let post = await postModel.findOne({ where: { id: req.params.id } });
+    if (post) {
+      res.status(200).send(post);
+    } else {
+      res.status(403).send(`There is no post with id = ${req.params.id}`);
+    }
     //findOne sequelize method returns one object depends .
     //findOne returns the first record it founds and always return one record only .
-    res.status(200).send(post);
+
   } catch (e) {
+    console.log(e);
     next(`error inside getOnePost function`);
   }
 }
@@ -67,6 +73,11 @@ async function deletePost(req, res, next) {
     next(`error inside deletePost function`);
   }
 }
+
+
+
+
+
 
 
 
