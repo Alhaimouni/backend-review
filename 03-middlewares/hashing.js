@@ -21,7 +21,7 @@ async function hashingPasword(req, res, next) {
     }
   } catch (e) {
     console.log(e);
-    next('error inside hashingPasword middleware')
+    next('error inside hashingPasword middleware');
   }
 }
 
