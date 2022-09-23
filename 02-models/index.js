@@ -3,6 +3,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { createPostModel } = require('./post.model');
 const { createCommentModel } = require('./comment.model');
+const { createUserModel } = require('./user.model');
 
 require('dotenv').config();
 
@@ -16,6 +17,7 @@ const sequelize = new Sequelize(POSTGRS_URL, sequelizeOption);
 
 const postModel = createPostModel(sequelize, DataTypes);
 const commentModel = createCommentModel(sequelize, DataTypes);
+const userModel = createUserModel(sequelize, DataTypes);
 
 postModel.hasMany(commentModel, { foreignKey: "postId", sourceKey: "id" });
 commentModel.belongsTo(postModel, { foreignKey: "postId", targetKey: "id" });
@@ -29,4 +31,4 @@ commentModel.belongsTo(postModel, { foreignKey: "postId", targetKey: "id" });
 
 
 
-module.exports = { sequelize, postModel, commentModel };
+module.exports = { sequelize, postModel, commentModel, userModel };

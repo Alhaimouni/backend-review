@@ -27,7 +27,7 @@ async function getAllComments(req, res, next) {
     const allComments = await commentModel.findAll({include:[postModel]});
     res.status(200).send(allComments);
   } catch (e) {
-    next(`Error inside getAllComments function`)
+    next(`Error inside getAllComments function`);
   }
 
 }
