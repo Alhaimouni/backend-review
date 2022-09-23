@@ -2,19 +2,20 @@
 
 const express = require('express');
 const { postModel, commentModel } = require('../02-models/index');
+const { bearerAuth } = require('../03-middlewares/bearerAuth');
 const router = express.Router();
 
 
-router.post('/post', addPost);
-router.get('/post', getAllPosts);
-router.get('/post/:id', getOnePost);
-router.put('/post/:id', updateOnePost);
-router.delete('/post/:id', deletePost);
+router.post('/post', bearerAuth, addPost);
+router.get('/post', bearerAuth, getAllPosts);
+router.get('/post/:id', bearerAuth, getOnePost);
+router.put('/post/:id', bearerAuth, updateOnePost);
+router.delete('/post/:id', bearerAuth, deletePost);
 
 
 async function addPost(req, res, next) {
   try {
-    const obj = req.body;  //{"title":"any" , "content":"any"}
+    const obj = req.body;  //{"title":"any" , "content":"any" }
     let newPost = await postModel.create(obj);
     //create sequelize method returns the created object only.
     let allPosts = await postModel.findAll();

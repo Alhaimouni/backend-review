@@ -8,7 +8,6 @@ const { userModel } = require('../02-models/index');
 
 async function basicAuthDecode(req, res, next) {
   try {
-    console.log(req);
     let userData = req.headers.authorization;
     let encodedData = userData.split(' ')[1]
     let decodedData = base64.decode(encodedData);
@@ -17,7 +16,11 @@ async function basicAuthDecode(req, res, next) {
     if (user) {
       let checkPass = await bcrypt.compare(password, user.password);
       if (checkPass) {
-        let newToken = jwt.sign({ testJwtSign: user.username }, process.env.SECRET); //object key 'test' call it what ever you want
+        let newToken = jwt.sign({ testJwtSign: user.username }, process.env.SECRET);
+        /*
+        1) Object key 'testJwtSign' call it whatever you want.
+        2) The key 'testJwtSign' value MUST be unique because next time after check the token we will get the data from the database using it.
+        */
         user.token = newToken;
         req.signedUserWithToken = user;
         next();

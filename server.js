@@ -27,8 +27,6 @@ app.get('/', (req, res) => {
 
 
 
-
-
 app.use('*', noRouteExist);
 app.use(errorHandler);
 

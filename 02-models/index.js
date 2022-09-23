@@ -22,8 +22,8 @@ const userModel = createUserModel(sequelize, DataTypes);
 postModel.hasMany(commentModel, { foreignKey: "postId", sourceKey: "id" });
 commentModel.belongsTo(postModel, { foreignKey: "postId", targetKey: "id" });
 
-
-
+userModel.hasMany(commentModel, { foreignKey: "userId", sourceKey: "id" });
+commentModel.belongsTo(userModel, { foreignKey: "userId", targetKey: "id" });
 
 
 

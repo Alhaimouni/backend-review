@@ -13,7 +13,7 @@ router.get(`/users`, getUsers);
 
 async function signup(req, res, next) {
   try {
-    let newUser = await userModel.create(req.body);
+    let newUser = await userModel.create(req.body); //{"email":"any","username":"any","password":"any"}
     res.status(200).send(`user added to database`);
   } catch (e) {
     console.log(e);
