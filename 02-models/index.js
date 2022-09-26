@@ -19,6 +19,7 @@ const sequelizeOption = {
     },
   },
 };
+const sequelize = new Sequelize(POSTGRS_URL, sequelizeOption);
 
 sequelize
   .authenticate()
@@ -29,7 +30,6 @@ sequelize
     console.log(err);
   });
 
-const sequelize = new Sequelize(POSTGRS_URL, sequelizeOption);
 
 const postModel = createPostModel(sequelize, DataTypes);
 const commentModel = createCommentModel(sequelize, DataTypes);
