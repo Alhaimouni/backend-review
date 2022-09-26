@@ -20,6 +20,15 @@ const sequelizeOption = {
   },
 };
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Database connected to postgres DBMS");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 const sequelize = new Sequelize(POSTGRS_URL, sequelizeOption);
 
 const postModel = createPostModel(sequelize, DataTypes);
